@@ -1296,6 +1296,13 @@ def get_posts(username):
 
 ---
 
+# Une appli complète
+
+Voyez la construction pas à pas d'une appli de chat minimaliste, mais fonctionnelle, sur
+[backend-chatapp.surge.sh](https://backend-chatapp.surge.sh/scrollycoding)
+
+---
+
 class: middle
 
 # Dans le prochain épisode ...
@@ -1306,4 +1313,3 @@ class: middle
 
 <iframe src="https://giphy.com/embed/Xd6Y9TuDtylt5ug5PC" width="480" height="260" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 ]
-```
