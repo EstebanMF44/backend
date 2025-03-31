@@ -977,12 +977,26 @@ Par exemple, allez sur <https://www.mat.minesparis.psl.eu> et trouvez le cookie 
 
 # Rajoutons un Cookie dans notre serveur
 
-.center[[http://bit.ly/410qbdD](http://bit.ly/410qbdD)]
-
 .center[
+le dossier `python/http-cookie` du cours
+<br>ou<br>
+[http://bit.ly/410qbdD](http://bit.ly/410qbdD)
+<br>ou<br>
 <img src="static/media/qrcode/cookie.png" width="20%">
 ]
 
+.footnote.small[
+  faites tourner ce code sur votre ordi et cherchez les cookies dans les headers  
+  si vous joignez le serveur sur `localhost`, vous allez peut-être en voir plein..
+  comment se fait-il d'après vous ?
+
+  <details><summary>réponse</summary>
+
+  le cookie est - en gros - <b>attaché à un hostname</b>; donc tous les cookies qui auront été mis par un serveur que vous avez déjà joint via <code>localhost</code>, même qui n'ont rien à voir avec celui-ci, seront remis dans la requête par le browser
+
+  </details>
+
+]
 ---
 
 # HTTP + 🍪 suffisant pour tout faire ?
@@ -1030,14 +1044,14 @@ oblige Patrick à tout le temps demander s'il y a du nouveau pour lui...
 
 # Websocket
 
-.center[En 2011: révolution arrivée de Websocket 🤯]
+.center[En 2011, révolution: arrivée de Websocket 🤯]
 
 .cols[
 .sixty[
 <br><br>
 .center[connexion **bidirectionnelle** entre un client et le serveur
 <br><br>on parle de connexion *full-duplex*
-<br><br>permet au serveur de ***pousser*** des informations vers le client sans que ce dernier n'est rien demandé 😲
+<br><br>permet au serveur de ***pousser*** des informations vers le client sans que ce dernier n'ait rien demandé 😲
 ]
 son petit nom: `ws` (ou `wss` pour le sécurisé)
 ]
@@ -1068,12 +1082,12 @@ Et à chaque évènement on va venir associer une action
 
 # Par exemple&nbsp;:
 
-Voyez dans le dossier `python/sebsockets`:
+Voyez dans le dossier `python/websockets`:
 
 .cols[
 .fifty[
 
-le protocole "ping-pong":
+le protocole "ping-pong" (en fait "ping-gnip"):
 
 - `ws-server.py` : un serveur WebSocket en Python
 - `ws-client.py` : un client WebSocket en Python
@@ -1090,10 +1104,8 @@ le protocole "countdown", même logique:
 - `python ws-client2.py 3` va durer 3 secondes
 - `node ws-client2.js 3` pareil mais en JS
 
-cette fois c'est plus intéressant, le client au serveur envoie un nombre de secondes, le et serveur répond en décomptant jusqu'à 0
-]
-]
-
+cette fois c'est plus intéressant, le client **envoie au serveur un nombre de
+secondes**, et le serveur répond en décomptant jusqu'à 0 ] ]
 
 
 .footnote[

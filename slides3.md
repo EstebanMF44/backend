@@ -192,16 +192,15 @@ Micro-framework car noyau très léger et minimaliste mais pouvant être enrichi
 .center[
 
 <figure>
-<img src="static/media/web_framework_survey.png" width="60%"/><br>
+<img src="static/media/web_framework_survey.png" width="70%"/><br>
 <label style="font-size: x-small"> Source: <a href="https://www.jetbrains.com/lp/devecosystem-2022/python/">https://www.jetbrains.com/lp/devecosystem-2022/python/</a>
 </figure>
 ]
 
---
-
-3️⃣ Pourquoi Flask et pas Django
-
-.center[J'ai une séance de 3 heures pas un semestre ... <span style="font-size: small">et puis j'aime pas Django</span> 😒]
+.footnote.small[
+  Notez bien que tout ça est extrêmement difficile à mesurer par ailleurs - par exemple, on parle de quelle unité ?  
+  Il reste toutefois que la tendance FastAPI semble effectivement être à la hausse.
+]
 
 ---
 
@@ -266,10 +265,12 @@ Pour commencer on installe `Flask`
 pip install flask
 ```
 
-Vous pourrez alors travailler en local 💻️. <br>
-<br>
-Au besoin si vous voulez vous mettre dans une configuration serveur vous pouvez utiliser [@Replit](https://replit.com) il y a un template Flask.
-<br><br>
+Vous pourrez alors travailler en local 💻️. 
+
+.small[
+  Au besoin si vous voulez vous mettre dans une configuration serveur vous pouvez utiliser [@Replit](https://replit.com) il y a un template Flask.
+]
+
 .center[Et rien de plus à faire 😯 <br>
 <br><br>
 c'est l'avantage de Flask par rapport à Django <br> qui nécessite un setup plus poussé pour démarrer un projet]
@@ -339,9 +340,9 @@ app.run(debug=True, port=3001)
 
 ---
 
-# Envoyer autre choses qu'une chaine !
+# Envoyer autre chose qu'une chaine !
 
-Si on veut pour une url donnée renvoyer non pas une chaîne mais un fichier HTML qui lui même peut nécessiter des CSS/JS il va falloir une organisation un peu particulière
+Si on veut pour une url donnée renvoyer, non pas une chaîne, mais un fichier HTML qui lui même peut nécessiter des CSS/JS, il va falloir une organisation un peu particulière
 
 .cols[
 .fifty[
@@ -374,7 +375,8 @@ def index():
 ]
 ]
 
-En revanche tous les fichiers contenus dans le dossier `static` seront automatiquement accessible sans que l'on ait rien à faire et ça c'est 🆒 !
+En revanche tous les fichiers contenus dans le dossier `static` seront
+**automatiquement accessibles** sans que l'on ait rien à faire et ça c'est 🆒 !
 
 ---
 
@@ -428,7 +430,7 @@ Possibilité de typer les paramètres :
 - `string` : pour tout texte sans slash
 - `int` : valeur entière positive
 - `float` : valeur flottante positive
-- `path` : comme les string mais accepte les slashs
+- `path` : un string qui peut contenir un slash `/`
 
 ]
 .fifty[
@@ -437,12 +439,17 @@ Possibilité de typer les paramètres :
 @app.route("/home/<int:user_id>")
 def home_uid(user_id):
     ## do something according to user_id value
-    return ""
+    return f"we were passed {user_id}"
 ```
 
 ]
 ]
 
+.footnote.small[
+
+  bien sûr on peut aussi recevoir comme ça plusieurs paramètres
+
+]
 ---
 
 # Un exemple : générateur de nombre aléatoire
@@ -538,13 +545,14 @@ Plusieurs méthodes à disposition :
 
 Deux cas de figures :
 
-- Fichiers "statiques" -> contenu ne dépendant de rien donc le plus simple en fait
+- Réponses "statiques" -> contenu ne dépendant de rien donc le plus simple en fait
 
-.center[<iframe src="https://giphy.com/embed/Rl9Yqavfj2Ula" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>]
+.center[<iframe src="https://giphy.com/embed/Rl9Yqavfj2Ula" height="250" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>]
 
 --
 
-- Fichiers "dynamiques" -> contenu dépendant de données externes (base de données typiquement, paramètres utilisateur... )
+- Réponses "dynamiques" -> contenu dépendant de données externes (base de
+  données typiquement, paramètres utilisateur... )
 
 .center[Page profil utilisateur, recherche de produits selon critères, ... ]
 
@@ -724,7 +732,7 @@ Et d'un point de vue très pragmatique
 
 # Jinja2 plein d'autres choses
 
-On a survolé les fonctionnalités de base de Jinja mais il y a plein de trucs advance super pratiques
+On a survolé les fonctionnalités de base de Jinja mais il y a plein de trucs *advance* super pratiques
 
 [https://jinja.palletsprojects.com/en/3.1.x/templates/](https://jinja.palletsprojects.com/en/3.1.x/templates/)
 
@@ -882,9 +890,9 @@ Et ça demande de définir une clé secrete
 
 ---
 
-# Données du formulaire dans les `handler`
+# Données du formulaire dans les *handlers*
 
-On peut directement réutiliser la classe `LoginForm` dans nos fonctions handler par exemple :
+On peut directement réutiliser la classe `LoginForm` dans nos fonctions *handler* par exemple :
 
 ```python
 @app.route("/", methods=['GET', 'POST'])
@@ -898,15 +906,15 @@ def login():
     return render_template("login.html", form=form)
 ```
 .cols[
-.fifty[
+.sixty[
 
 Remarques
-- login.html dois être dans un répertoire `/templates`
-- son extension doit être .html, .htm, .xml, .xhtml, ou .svg
+- `login.html` doit être dans un répertoire `/templates`
+- son extension doit être `.html`, `.htm`, `.xml`, `.xhtml`, ou `.svg`
 
   ]
 
-.fifty[
+.fourty[
 .center[
 [http://bit.ly/3JyTBb2](http://bit.ly/3JyTBb2)
 
@@ -995,7 +1003,8 @@ def index():
   if name:
     return f"Hello {name}"
   else:
-    return "Merci de faire d'abord une requête vers /une/url/<username>"
+    return ("Merci de faire d'abord une requête"
+            " vers /une/url/<username>")
 ```
 
 ]
