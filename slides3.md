@@ -59,6 +59,8 @@ layout: true
 
 # Les frameworks
 
+[//]: # (TODO: dupplicat de slides2 mais ici en plus complet sur certains points)
+
 Réponse à un besoin mais lequel ?
 
 .center[***Cadre de développement simplifié***]
@@ -728,6 +730,8 @@ Grosso modo
 Et d'un point de vue très pragmatique
 .center[peut dépendre également du confort que vous avez à programmer en Python ou Javascript]
 
+[//]: # (TODO : De là on peut commencer à dériver sur qu'est-ce qu'une API, la seule chose côté serveur ça doit être les data, la partie métier peut être côté front et back, souvent un peu des deux. C'est ce qu'on appelle une API. Et là c'est pas technique, c'est stratégique, c'est savoir ce que vous voulez ouvrir aux autres - exemple de open data qui comprend que l'état ne saura jamais être au plus près des citoyen et préfère ouvrir les données à des assoces ou entreprises (ou ministère !) qui pourront mieux faire le job)
+
 ---
 
 # Jinja2 plein d'autres choses
@@ -911,7 +915,7 @@ def login():
 Remarques
 - `login.html` doit être dans un répertoire `/templates`
 - son extension doit être `.html`, `.htm`, `.xml`, `.xhtml`, ou `.svg`
-
+- remarquez bien que c'est la même fonction qui affiche et qui traite le formulaire
   ]
 
 .fourty[
@@ -1186,6 +1190,13 @@ Mais vous allez voir c'est beaucoup plus simple que ce qu'on vous a dit en prép
 .footnote[il y a plein d'autres ORMs utilisables avec Flask, mais SQLAlchemy est le plus populaire]
 
 ---
+# Rappel de base 
+
+[//]: # (TODO : Y a pas que des BDD relationnelle. Le dessin pourrait être autour d'un gros SGBDR / RDBMS en découpant R-DB-MS et dire ce que chaque partie veut dire puis rappeler que si on est un moteur de recherche, qu'on stocke des documents, des événements, etc. alors on utilisera pas des RDB ; que là y a un coût pour garantir la transactionnalité sous entendu ACID et la non répétitivité sous entendu Forme normale)
+
+# Rappel de base relationnelle
+
+[//]: # (TODO Proposition de rappeler très rapidement les différentes cardinalités et leur implémentation, idéalement sans donner la solution tout de suite, ça pourrait être : Slide 1 deux tables Student / Group, slide 2 : la même chose en montre le MPD avec l'id rapatriée, Slide 3 : actor / movie, slide 4 : la solution avec la table de jointure, slide 5 : la même avec la table de jointure nommée "role" et auquel on a ajouté une colonne "character name" et qui devient donc un concept métier)
 
 # La tables des "User"
 
