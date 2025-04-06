@@ -3,6 +3,7 @@ from random import randint
 
 
 class SessionHandler(BaseHTTPRequestHandler):
+
     def do_GET(self):
         routes = {
             "/": self.home,
@@ -20,6 +21,7 @@ class SessionHandler(BaseHTTPRequestHandler):
 
         try:
             self.cookie = f"visit={self.visit}"
+            # call the callback attached to the endpoint
             content = routes[self.path]()
         except Exception as e:
             response = 404
