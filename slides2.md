@@ -997,6 +997,7 @@ le dossier `python/http-cookie` du cours
 
   </details>
 
+  enfin sur Chrome, vous pouvez aussi inspecter les cookies dans le navigateur via `DevTools > Application > Cookies`
 ]
 ---
 
@@ -1067,7 +1068,7 @@ son petit nom: `ws` (ou `wss` pour le sécurisé)
 
 Très simplement en fait !
 
-.center[Première étape on établie une connexion vers un serveur WebSocket <br> via <br>
+.center[Première étape on établit une connexion vers un serveur WebSocket <br> via <br>
 `ws://mon-super-server.com` ou `wss://mon-super-server.com`
 ]
 
