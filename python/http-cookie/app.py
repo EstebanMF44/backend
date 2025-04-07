@@ -1,5 +1,8 @@
 """
 the flask version of the cookie example
+
+this app sets a cookie in the browser called 'visit'
+that tracks the number of times the user has visited the page.
 """
 
 from flask import Flask, request, make_response
@@ -31,7 +34,7 @@ def serve_with_cookie(path):
     # build a response
     response = make_response(html)
     # set the cookie - this will end up in the browser cookie store
-    # and from then on, it will automatically sen it back to the server
+    # and from then on, it will automatically send it back to the server
     # on each request to the same domain
     response.set_cookie('visit', str(visit))
 
