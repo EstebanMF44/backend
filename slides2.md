@@ -869,6 +869,9 @@ Les logiciels open-source utilisent majoritairement la librairie ***OpenSSL*** <
 <br>
 Pour générer des certificats gratuitement il existe l'initiative **Let's Encrypt** <img src="static/media/logos/lets-encrypt.svg" width="30%">
 
+.footnote.small[
+  en pratique, un certificat est valide pour une durée finie, de l'ordre de 1 an, il faut donc le renouveler régulièrement
+]
 ---
 
 class: center, middle
@@ -889,7 +892,7 @@ Faisons une pause goûter 🤤
 ]
 
 .center[
-Ça fait partie de ces petites choses ***cachées*** dans le header des réponses HTTP
+Ça fait partie de ces petites choses ***cachées*** dans les headers HTTP
 ]
 
 ---
@@ -938,21 +941,44 @@ Concrètement on va pouvoir stocker :
 # Mettre des cookies
 
 Rien de plus simple, dans l'en-tête de la réponse serveur il suffit d'ajouter
-<br><br>
+<br>
 .center[
 `Set-Cookie: <name>=<value>; <attributs...>`
 ]
-<br><br>
+
 Attributs de Cookie
 
 - `Expires` : durée de vie (date/heure)
 - `Max-Age` : durée de vie (seconde)
 - `Domain` : noms de domaine pour lesquels le cookie est renvoyé
 - `Path` : chemin particulier pour lesquels le cookie est renvoyé
-- `Secure` : si on autorise ou pas l'envoi via HTTP et non HTTPS
-- `HttpOnly` : si on autorise ou pas l'accès via autre chose de du http(s)
+- `Secure` : si défini, on n'envoie le cookie que sur https, et pas http
+- `HttpOnly` : si défini, on ne peut pas accéder au cookie via JavaScript
+- `SameSite` : définit si on envoie le cookie dans les *cross-site requests*
 
 Par exemple, allez sur <https://www.mat.minesparis.psl.eu> et trouvez le cookie `PHPSESSID`
+
+.cols[
+
+.fourty.small[
+  plus de détails ici sur MDN, notamment
+  - [en termes de durée de vie, au sujet de `Expires` et `Max-Age`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#removal_defining_the_lifetime_of_a_cookie)
+  - [en termes de *scope* au sujet de `Domain` et `Path`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#define_where_cookies_are_sent)
+  - [en termes de sécurité, au sujet de `HttpOnly` et `Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#security)
+]
+
+.sixty.small[
+  <br>Enfin [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#controlling_third-party_cookies_with_samesite), un sujet assez épineux, celui des [*third-party cookies*](https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Third-party_cookies); de quoi s'agit-il ?
+
+  Vous allez sur `https://the-shop.com` qui vous met un cookie
+  <br>
+  un peu plus tard vous consultez `https://other-site.com` 
+  <br>qui fait une requête **indirecte**  (e.g. un `fetch()` ou une `<img>`)
+  vers `https://the-shop.com`
+  <br>
+  doit-on envoyer le premier cookie ?
+]
+]
 
 ---
 
