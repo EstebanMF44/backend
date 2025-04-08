@@ -30,19 +30,6 @@ layout: true
 
 ---
 
-# Content
-
-1. Authentication / Authorization
-1. Certificates / PKI
-1. FastAPI
-1. Docker
-1. CI/CD
-1. Hosting
-1. Cloud offering
-2. Monitoring
-
----
-
 # 🔐 Web Authentication Techniques
 
 ## Session-based Authentication
