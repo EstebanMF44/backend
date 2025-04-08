@@ -53,7 +53,7 @@ def evenements(id):
     return "Méthode non autorisée", 405
   
 @app.route('/evenement/<int:id>', methods=['GET'])
-def association(id):
+def evenement(id):
   if request.method == 'GET':
     if id in evenements():
       pass
