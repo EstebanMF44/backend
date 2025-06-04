@@ -28,6 +28,7 @@ layout: true
         - <a href="slides1.html">1/3: Réseaux</a>
         - <a class="current-slides" href="slides2.html">2/3: Coté Serveur!</a>
         - <a href="slides3.html">3/3: Flask</a>
+        - <a href="slides4.html">4: Addendum</a>
     </div>
 </div>
 
@@ -134,9 +135,9 @@ C'est l'application (au sens logiciel) qui va s'occuper de
 
 .center[**Recevoir**, **Traiter** et **Répondre** aux requètes HTTP (ou autres d'ailleurs)]
 
-Différentes solutions : Apache (40%), Nginx (20%), IIS (10%), ...
+Différentes solutions : Nginx (33%), Apache (27%), LiteSpeed (15%), Node.js(4%), IIS (4%), ...
 
-.footnote[Source : [https://fr.hostadvice.com/marketshare/server/](https://fr.hostadvice.com/marketshare/server/) ]
+.footnote[Source : [https://w3techs.com/technologies/overview/web_server](https://w3techs.com/technologies/overview/web_server) ]
 
 ---
 
@@ -173,7 +174,7 @@ le "routage" entre les deux sites se fait au niveau du Header `Host:` de la requ
 
 ]
 
-.center[**_Un serve rless est un serveur qui n'attend pas_**]
+.center[**_Un serverless est un serveur qui n'attend pas_**]
 
 Le principe est de découper le traitement en petites **tâches indépendantes** (fonctions) qui seront exécutées **à la demande**
 
@@ -273,6 +274,7 @@ Coût plus faible pour les fournisseurs car ils peuvent optimiser l'utilisation 
 - GitLab Pages
 - Netlify
 - Vercel
+- Surge 
 - ...
 
 ]
@@ -373,29 +375,29 @@ puis ouvrez dans votre navigateur `http://localhost:8000/index.html` (*)
 
 .cols[
 
-.fourty[
-  On peut aussi le faire "à la main" en Python 🐍
+.fourty.small[
+  On peut aussi écrire le serveur "à la main" en Python 🐍
 
-  📢 ⚠️ On regarde le fichier `minimal_server.py`
+  📢 ⚠️ On regarde le fichier `server1_static.py`
 
   ```bash
-  $ cd python/http
-  $ python minimal_server.py
+  $ cat python/http/server1_static.py
   ```
 ]
 
-.sixty[
+.sixty.small[
 
-```python
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+  ```python
+  from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-handler = SimpleHTTPRequestHandler
+  handler = SimpleHTTPRequestHandler
 
-print("Open this in your browser:\nhttp://localhost:9000/index.html")
+  print("Open this in your browser:\nhttp://localhost:9000/index.html")
 
-httpd = HTTPServer(('', 9000),  handler)
-httpd.serve_forever()
-```
+  httpd = HTTPServer(('', 9000),  handler)
+  httpd.serve_forever()
+  ```
+
 ]
 
 ]
@@ -421,24 +423,35 @@ Le fonctionnement interne d'un serveur HTTP est assez simple
 5. **Envoyer** la réponse
 6. **Fermer** la connexion
 
-Le point important est la transition entre les étapes 3 et 4 qui est le coeur du serveur HTTP
-car définit la manière dont le serveur va traiter la requête.
+Le point important est la transition entre les étapes 3 et 4 qui est le coeur du serveur HTTP  
+car il définit la manière dont le serveur va traiter la requête.
 
 ---
 
-# Exemple fait à la main
+# Exemples fait à la main
 
-.center[
+📢 ⚠️ dans le dossier `python/http`, on regarde les fichiers:
+
+- `server2_static_byhand.py`
+  - en gros, mêmes fonctions: sait répondre à GET pour les fichiers statiques
+  - mais écrit "à la pogne"
+    <br><br>
+- `server3_post_stateful.py`
+  - le serveur est STATEFUL (il se souvient de l'état) - voir la variable `STATE`  
+    (NB: dans la vraie vie bien sûr, l'état sera stocké dans une database SQL - ou autre)
+  - le POST: les affectations var=value sont mémorisées
+  - le GET: quel que soit le PATH, affiche en html le contenu des variables connues dans `STATE` (et autres détails)
+    <br><br>
+- `server4_template.py`
+  - mêmes fonctionnalités mais avec un template JINJA2
+
+tout cela est un peu fastidieux, c'est pourquoi on utilise des frameworks (-> slides suivants)  
+mais c'est bien de comprendre comment ça marche  
+à retenir tout de même: cette histoire de templates; on en reparlera
+
+<!-- pour info, était aussi dispo sur replit ici:
 [http://bit.ly/3EeuLLo](http://bit.ly/3EeuLLo)
-]
-
-.center[
-<img src="static/media/qrcode/http_server.png" width="20%">
-]
-
-📢 ⚠️ On regarde les fichiers `more_advance_server.py` et `more_more_advance_server.py`  
-
-ou aussi dispo dans le dossier `python/http`
+<img src="static/media/qrcode/http_server.png" width="20%"> -->
 
 ---
 
@@ -632,9 +645,133 @@ class: center, middle
 
 Vous avez <https://github.com/ue22-p24/backend-apitester-frontend> un frontend tout fait !
 
-Et vous avez <https://github.com/ue22-p24/backend-api-skeleton> un backend à compléter
+Et vous avez <https://github.com/ue22-p24/backend-apitester-skeleton> un backend à compléter
 
 L'api du backend doit **impérativement** respecter les routes documentées dans le README.
+
+.footnote.small[
+  **astuce**:  
+  pour copier le contenu de ces dépôts sur votre machine, plutôt que d'utiliser `git clone`, vous pouvez utiliser ceci
+  ```bash
+  # si nécessaire (npx command not found)
+  # conda install -c conda-forge nodejs
+  # download le repo dans le dossier 'frontend'
+  npx degit git@github.com:ue22-p24/backend-apitester-frontend.git frontend
+  # pareil pour le backend
+  npx degit git@github.com:ue22-p24/backend-apitester-skeleton.git backend
+  ```
+  qui a l'avantage de ne pas recréer un dépôt git dans le dossier créé; surtout si vous vous placez dans un dépôt déjà existant genre `backend-homework`  
+  (mais ne vous empeche pas de `git add` le résultat immédiatement)
+]
+
+---
+
+# Quelques trucs utiles (1)
+
+## *auto-reload*
+
+- on peut lancer l'application avec `python app.py`; ça marche...  
+-  **MAIS** il faut relancer le tout à chaque modification (très sous-optimal)
+-  du coup il vaut mieux activer le mode debug en lançant
+  ```bash
+  flask [--app mon_fichier] run --debug
+  ```
+  qui permet d'avoir un serveur de développement qui se relance tout seul à chaque modification du code,
+  et présente en outre un avantage supplémentaire: les erreurs s'affichent dans le browser plutôt que dans le terminal  
+  (notez que c'est néfaste en production, car ça peut donner des informations sensibles sur le code)
+
+.footnote.small[
+  et pareil pour le frontend d'ailleurs; si vous avez l'intention d'y toucher, il est préférable de le lancer avec `vite`, comme ça il se relance tout seul à chaque modification
+]
+
+---
+
+# Quelques trucs utiles (2)
+
+## les routes en Flask
+
+- une route peut prendre un paramètre, éventuellement typé
+  .cols[
+  .fifty[
+      ```pythona
+  @app.route('/hello/<name>')
+      def hello(name):
+          return f'Hello, {name}!'
+      ```
+  ]
+  .fifty[
+```python
+  @app.route('/hello/<int:id>')
+      def hello(id):
+          return f'Hello, {id**2}!'
+```
+  ]
+  ]
+
+- pour raccourcir le code, une route peut retourner des types variés, qui sont traités comme ceci :
+
+  - `str` : renvoie le texte tel quel, avec un code 200
+  - `tuple` : renvoie le premier élément comme texte, le deuxième comme code HTTP
+  - `dict` or `list` : renvoie un JSON, avec un code 200
+  -  **attention** toutefois avec les **itérateurs** car Flask les traite comme des réponses **en streaming**  
+       ce qui nécessite un traitement différent dans le frontend, du coup dans
+       cet exo ça ne marchera pas si une de vos routes renvoye un itérateur
+  - liste non exhaustive...
+
+---
+
+# Quelques trucs utiles (3)
+
+## *httpie*
+
+- c'est pratique d'avoir un vrai frontend en html/css/js
+- MAIS pour développer il peut être utile de tester AUSSI les routes en ligne de commande dans le terminal
+- pour cela **on peut utiliser `httpie`** (ou `curl` mais c'est moins lisible)
+- qui s'installe avec
+
+  ```bash
+  pip install httpie
+  ```
+
+- et qui s'utilise comme ceci
+
+  ```bash
+  # un GET
+  http GET http://localhost:5000/hello
+  # ou en abrégé
+  http :5000/hello
+  # un POST
+  http POST http://localhost:5000/hello var=value
+  # d'ailleurs avec une affectation de ce type le POST est automatique
+  # ce qui fait que la commande suivante est équivalente
+  http :5000/hello var=value
+  ```
+
+- et comme toujours, voir la doc pour plus de détails...
+
+---
+
+# Quelques trucs utiles (4)
+
+## MacOS & AirPlay
+
+- sur MacOS il y a potentiellement déjà un service qui tourne sur le port 5000
+- si vous voyez ceci:
+
+  ```bash
+  $ http http://localhost:5000
+  HTTP/1.1 403 Forbidden
+  Content-Length: 0
+  Server: AirTunes/845.5.1
+  ...
+  ```
+
+  c'est que vous avez un service AirPlay qui tourne sur ce port  
+  dans ce cas utilisez un autre port avec
+
+  ```bash
+  flask run --port 5001
+  ```
 
 ---
 
@@ -714,7 +851,7 @@ pour garantir la sécurité de l'utilisateur
 En pratique le chiffrement fonctionne avec un système clé publique/clé privée
 
 .center[
-<img src="static/media/timeline-tls.svg" height="480px">
+<img src="static/media/timeline-tls.excalidraw.svg" height="480px">
 ]
 
 ---
@@ -732,6 +869,9 @@ Les logiciels open-source utilisent majoritairement la librairie ***OpenSSL*** <
 <br>
 Pour générer des certificats gratuitement il existe l'initiative **Let's Encrypt** <img src="static/media/logos/lets-encrypt.svg" width="30%">
 
+.footnote.small[
+  en pratique, un certificat est valide pour une durée finie, de l'ordre de 1 an, il faut donc le renouveler régulièrement
+]
 ---
 
 class: center, middle
@@ -752,7 +892,7 @@ Faisons une pause goûter 🤤
 ]
 
 .center[
-Ça fait partie de ces petites choses ***cachées*** dans le header des réponses HTTP
+Ça fait partie de ces petites choses ***cachées*** dans les headers HTTP
 ]
 
 ---
@@ -801,21 +941,44 @@ Concrètement on va pouvoir stocker :
 # Mettre des cookies
 
 Rien de plus simple, dans l'en-tête de la réponse serveur il suffit d'ajouter
-<br><br>
+<br>
 .center[
 `Set-Cookie: <name>=<value>; <attributs...>`
 ]
-<br><br>
+
 Attributs de Cookie
 
 - `Expires` : durée de vie (date/heure)
 - `Max-Age` : durée de vie (seconde)
 - `Domain` : noms de domaine pour lesquels le cookie est renvoyé
 - `Path` : chemin particulier pour lesquels le cookie est renvoyé
-- `Secure` : si on autorise ou pas l'envoi via HTTP et non HTTPS
-- `HttpOnly` : si on autorise ou pas l'accès via autre chose de du http(s)
+- `Secure` : si défini, on n'envoie le cookie que sur https, et pas http
+- `HttpOnly` : si défini, on ne peut pas accéder au cookie via JavaScript
+- `SameSite` : définit si on envoie le cookie dans les *cross-site requests*
 
 Par exemple, allez sur <https://www.mat.minesparis.psl.eu> et trouvez le cookie `PHPSESSID`
+
+.cols[
+
+.fourty.small[
+  plus de détails ici sur MDN, notamment
+  - [en termes de durée de vie, au sujet de `Expires` et `Max-Age`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#removal_defining_the_lifetime_of_a_cookie)
+  - [en termes de *scope* au sujet de `Domain` et `Path`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#define_where_cookies_are_sent)
+  - [en termes de sécurité, au sujet de `HttpOnly` et `Secure`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#security)
+]
+
+.sixty.small[
+  <br>Enfin [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#controlling_third-party_cookies_with_samesite), un sujet assez épineux, celui des [*third-party cookies*](https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Third-party_cookies); de quoi s'agit-il ?
+
+  Vous allez sur `https://the-shop.com` qui vous met un cookie
+  <br>
+  un peu plus tard vous consultez `https://other-site.com` 
+  <br>qui fait une requête **indirecte**  (e.g. un `fetch()` ou une `<img>`)
+  vers `https://the-shop.com`
+  <br>
+  doit-on envoyer le premier cookie ?
+]
+]
 
 ---
 
@@ -841,12 +1004,27 @@ Par exemple, allez sur <https://www.mat.minesparis.psl.eu> et trouvez le cookie 
 
 # Rajoutons un Cookie dans notre serveur
 
-.center[[http://bit.ly/410qbdD](http://bit.ly/410qbdD)]
-
 .center[
+le dossier `python/http-cookie` du cours
+<br>ou<br>
+[http://bit.ly/410qbdD](http://bit.ly/410qbdD)
+<br>ou<br>
 <img src="static/media/qrcode/cookie.png" width="20%">
 ]
 
+.footnote.small[
+  faites tourner ce code sur votre ordi et cherchez les cookies dans les headers  
+  si vous joignez le serveur sur `localhost`, vous allez peut-être en voir plein..
+  comment se fait-il d'après vous ?
+
+  <details><summary>réponse</summary>
+
+  le cookie est - en gros - <b>attaché à un hostname</b>; donc tous les cookies qui auront été mis par un serveur que vous avez déjà joint via <code>localhost</code>, même qui n'ont rien à voir avec celui-ci, seront remis dans la requête par le browser
+
+  </details>
+
+  enfin sur Chrome, vous pouvez aussi inspecter les cookies dans le navigateur via `DevTools > Application > Cookies`
+]
 ---
 
 # HTTP + 🍪 suffisant pour tout faire ?
@@ -894,14 +1072,14 @@ oblige Patrick à tout le temps demander s'il y a du nouveau pour lui...
 
 # Websocket
 
-.center[En 2011: révolution arrivée de Websocket 🤯]
+.center[En 2011, révolution: arrivée de Websocket 🤯]
 
 .cols[
 .sixty[
 <br><br>
 .center[connexion **bidirectionnelle** entre un client et le serveur
 <br><br>on parle de connexion *full-duplex*
-<br><br>permet au serveur de ***pousser*** des informations vers le client sans que ce dernier n'est rien demandé 😲
+<br><br>permet au serveur de ***pousser*** des informations vers le client sans que ce dernier n'ait rien demandé 😲
 ]
 son petit nom: `ws` (ou `wss` pour le sécurisé)
 ]
@@ -916,7 +1094,7 @@ son petit nom: `ws` (ou `wss` pour le sécurisé)
 
 Très simplement en fait !
 
-.center[Première étape on établie une connexion vers un serveur WebSocket <br> via <br>
+.center[Première étape on établit une connexion vers un serveur WebSocket <br> via <br>
 `ws://mon-super-server.com` ou `wss://mon-super-server.com`
 ]
 
@@ -932,12 +1110,12 @@ Et à chaque évènement on va venir associer une action
 
 # Par exemple&nbsp;:
 
-Voyez dans le dossier `python/sebsockets`:
+Voyez dans le dossier `python/websockets`:
 
 .cols[
 .fifty[
 
-le protocole "ping-pong":
+le protocole "ping-pong" (en fait "ping-gnip"):
 
 - `ws-server.py` : un serveur WebSocket en Python
 - `ws-client.py` : un client WebSocket en Python
@@ -954,10 +1132,8 @@ le protocole "countdown", même logique:
 - `python ws-client2.py 3` va durer 3 secondes
 - `node ws-client2.js 3` pareil mais en JS
 
-cette fois c'est plus intéressant, le client au serveur envoie un nombre de secondes, le et serveur répond en décomptant jusqu'à 0
-]
-]
-
+cette fois c'est plus intéressant, le client **envoie au serveur un nombre de
+secondes**, et le serveur répond en décomptant jusqu'à 0 ] ]
 
 
 .footnote[

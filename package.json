@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.5.9"
+    "vite": ""
   },
   "description": "les slides du cours réseau / backend à l'École des Mines de Paris",
   "dependencies": {
-    "esbuild": "^0.18.20",
+    "esbuild": "",
     "fsevents": "^2.3.3",
     "nanoid": "^3.3.8",
     "picocolors": "^1.1.1",

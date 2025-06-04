@@ -134,8 +134,11 @@ p.legend {
   margin: 0;
 }
 
-.small {
+.small, .small-code .remark-code {
   font-size: small;
+}
+.tiny, .tiny-code .remark-code {
+  font-size: x-small;
 }
 
 .slide_footer {
@@ -152,5 +155,5 @@ p.legend {
 
 /* override minesparis.css by being more specific */
 body div.slide_footer {
-  left: 80%
+   left: 75%
 }
